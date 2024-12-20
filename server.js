@@ -5,7 +5,9 @@ const nodemailer = require('nodemailer');
 const app = express();
 
 app.use(cors({
-    origin: 'https://portfolio-delta-nine-63.vercel.app'
+    origin: 'https://portfolio-delta-nine-63.vercel.app',
+    methods: ['GET', 'POST', 'OPTIONS'], // Allow these methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
 }));
 app.use(express.json());
 
