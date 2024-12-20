@@ -1,9 +1,7 @@
 {
-  "name": "portfolio-mailer",
-  "version": "1.0.0",
-  "description": "Email service for portfolio contact form",
-  "main": "api/send-email.js",
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "nodemailer": "^6.9.16"
   }
 }
