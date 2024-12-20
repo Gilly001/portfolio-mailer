@@ -4,11 +4,10 @@ const nodemailer = require('nodemailer');
 
 const app = express();
 
-// Define allowed origins
-const allowedOrigins = [
-    'https://portfolio-delta-nine-63.vercel.app',
-    'http://localhost:3000'  // Include this if you need local development
-];
+// const allowedOrigins = [
+//     'https://portfolio-delta-nine-63.vercel.app',
+//     'http://localhost:3000'
+// ];
 
 // Configure CORS with more specific options
 app.use(cors({
