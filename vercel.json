@@ -16,8 +16,5 @@
       "src": "api/send-email.js",
       "use": "@vercel/node"
     }
-  ],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
   ]
 }
