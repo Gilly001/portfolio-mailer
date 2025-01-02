@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node api/send-email.js"
+    "build": "npm install --omit=dev && npm run build"
   },
   "dependencies": {
     "cors": "^2.8.5",
