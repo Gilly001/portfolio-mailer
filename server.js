@@ -23,6 +23,10 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+app.get('/hello', (req, res) => {
+    res.send('Hello from the root route!');
+})
+
 app.post('/send-email', async (req, res) => {
     // Add explicit CORS headers for this route
     // res.header('Access-Control-Allow-Origin', 'https://portfolio-delta-nine-63.vercel.app');
