@@ -1,5 +1,5 @@
 // api/send-email.js
-import nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer');
 
 // Define the transporter outside the handler to reuse it across multiple requests
 const transporter = nodemailer.createTransport({
@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // This is the serverless function handler
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
     if (req.method === 'POST') {
         const { name, email, message } = req.body;
 
