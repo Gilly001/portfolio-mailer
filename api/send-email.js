@@ -1,50 +1,41 @@
+const express = require('express');
+const cors = require('cors');
 const nodemailer = require('nodemailer');
 
-// Define the transporter outside the handler to reuse it across multiple requests
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Create a transporter using SMTP
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: 'your-smtp-host',
     port: 587,
-    secure: false,
+    secure: false, // Use TLS
     auth: {
-        user: 'gilbertmaina001@gmail.com', // Use environment variables for sensitive data
+        user: 'gilbertmaina001@gmail.com',
         pass: 'ylcp hcqs iblr xtka',
-    },
+    }
 });
 
-// This is the serverless function handler
-module.exports = async (req, res) => {
-    // Set CORS headers
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS, PATCH, DELETE, POST, PUT');
-    res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+app.post('/send-email', async (req, res) => {
+    const { name, email, message } = req.body;
 
-    // Handle OPTIONS request (CORS preflight)
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
+    const mailOptions = {
+        from: email, // sender address
+        to: 'gilbertmaina001@gmail.com', // list of receivers
+        subject: `New portfolio mail from ${name}`, // Subject line
+        text: message, // plain text body
+        replyTo: email // so you can reply directly to the sender
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        res.status(200).send('Email sent successfully');
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).send('Error sending email');
     }
+});
 
-    if (req.method === 'POST') {
-        const { name, email, message } = req.body;
-
-        const mailOptions = {
-            from: email,
-            to: 'gilbertmaina001@gmail.com',
-            subject: `New portfolio mail from ${name}`,
-            text: message,
-            replyTo: email,
-        };
-
-        try {
-            await transporter.sendMail(mailOptions);
-            res.status(200).json({ message: 'Email sent successfully' });
-        } catch (error) {
-            console.error('Error sending email:', error);
-            res.status(500).json({ error: 'Error sending email' });
-        }
-    } else {
-        // Handle methods other than POST (e.g., GET)
-        res.status(405).json({ error: 'Method Not Allowed' });
-    }
-};
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
