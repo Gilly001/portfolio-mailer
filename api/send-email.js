@@ -17,6 +17,9 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+console.log('Email User:', process.env.EMAIL_USER);
+console.log('Email Pass:', process.env.EMAIL_PASS);
+
 app.get('/send-mail', (req, res) => {
     res.status(200).send('Email endpoint is working. Please use POST method to send emails.');
 });
