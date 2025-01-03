@@ -8,7 +8,7 @@ app.use(express.json());
 
 // Create a transporter using SMTP
 const transporter = nodemailer.createTransport({
-    host: 'your-smtp-host',
+    host: 'smtp.gmail.com',
     port: 587,
     secure: false, // Use TLS
     auth: {
@@ -17,8 +17,16 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+app.get('/send-mail', (req, res) => {
+    res.status(200).send('Email endpoint is working. Please use POST method to send emails.');
+});
+
 app.post('/send-mail', async (req, res) => {
     const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+        return res.status(400).send('Missing required fields');
+    }
 
     const mailOptions = {
         from: email, // sender address
@@ -33,7 +41,7 @@ app.post('/send-mail', async (req, res) => {
         res.status(200).send('Email sent successfully');
     } catch (error) {
         console.error('Error sending email:', error);
-        res.status(500).send('Error sending email');
+        res.status(500).send(`Error sending email: ${error.message}`);
     }
 });
 
