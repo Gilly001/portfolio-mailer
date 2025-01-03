@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Create a transporter using SMTP
+
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -17,8 +17,6 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-console.log('Email User:', process.env.EMAIL_USER);
-console.log('Email Pass:', process.env.EMAIL_PASS);
 
 app.get('/send-mail', (req, res) => {
     res.status(200).send('Email endpoint is working. Please use POST method to send emails.');
@@ -32,11 +30,11 @@ app.post('/send-mail', async (req, res) => {
     }
 
     const mailOptions = {
-        from: email, // sender address
-        to: 'gilbertmaina001@gmail.com', // list of receivers
-        subject: `New portfolio mail from ${name}`, // Subject line
-        text: message, // plain text body
-        replyTo: email // so you can reply directly to the sender
+        from: email,
+        to: 'gilbertmaina001@gmail.com',
+        subject: `New portfolio mail from ${name}`,
+        text: message,
+        replyTo: email
     };
 
     try {
