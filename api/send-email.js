@@ -12,8 +12,8 @@ const transporter = nodemailer.createTransport({
     port: 587,
     secure: false, // Use TLS
     auth: {
-        user: 'gilbertmaina001@gmail.com',
-        pass: 'ylcp hcqs iblr xtka',
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
     }
 });
 
